@@ -19,7 +19,7 @@ data "archive_file" "create_pkg" {
   type = "zip"
 }
 
-resource "aws_lambda_function" "aws_lambda_test" {
+resource "aws_lambda_function" "aws_lambda" {
   function_name = "client-report-generator"
   description = "Generate cost consumption report"
   handler = "lambda.lambda_handler"
