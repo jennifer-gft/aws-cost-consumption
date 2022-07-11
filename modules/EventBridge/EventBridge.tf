@@ -10,7 +10,7 @@ resource "aws_lambda_function" "test_lambda" {
 }
 
 resource "aws_cloudwatch_event_rule" "LambdaTrigger" {
-  name        = var.LambdaName
+  name        = var.EventRuleName
   description = "Cloudwatch Cron Trigger for Lambda Function"
   schedule_expression = var.Schedule
 
@@ -25,5 +25,5 @@ EOF
 
 resource "aws_cloudwatch_event_target" "CWET" {
   rule      = aws_cloudwatch_event_rule.LambdaTrigger.name
-  arn       = aws_lambda_function.test_lambda.function_name
+  arn       = aws_lambda_function.test_lambda.arn
 }

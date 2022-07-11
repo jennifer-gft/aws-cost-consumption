@@ -1,16 +1,19 @@
 
+variable "EventRuleName" {
+  type = string
+}
+
 variable "LambdaName" {
   type = string
 }
 
 variable "zipName" {
   type = string
-  default = "helloworld.py.zip"
+  default = "modules/EventBridge/helloworld.py.zip"
 }
 
 variable "Schedule" {
- type = string
- default = "cron(0 0 0 3,6,9,12 2 * )"
+ default = "cron(0 0 1 */3 ? *)"
 }
 
 variable "LambdaIAM" {
