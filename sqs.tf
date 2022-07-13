@@ -34,7 +34,7 @@ resource "aws_sqs_queue_policy" "sqspolicy" {
     {
       "Sid": "Queue_Actions",
       "Action": [
-        "sqs:SendMessage"
+        "sqs:*"
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:sqs:eu-west-2:${data.aws_caller_identity.current.account_id}:report-delivery-queue",
