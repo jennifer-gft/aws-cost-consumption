@@ -4,32 +4,32 @@ resource "null_resource" "install_python_dependencies" {
 
     environment = {
       source_code_path = "lambda_function"
-      function_name = "client-report-generator"
-      path_module = path.module
-      runtime = "python3.7"
-      path_cwd = path.cwd
+      function_name    = "client-report-generator"
+      path_module      = path.module
+      runtime          = "python3.7"
+      path_cwd         = path.cwd
     }
   }
 }
 
 data "archive_file" "create_pkg" {
-  depends_on = [null_resource.install_python_dependencies]
-  source_dir = "${path.module}/lambda_function/"
+  depends_on  = [null_resource.install_python_dependencies]
+  source_dir  = "${path.module}/lambda_function/"
   output_path = "${path.module}/client-report-generator.zip"
-  type = "zip"
+  type        = "zip"
 }
 
 resource "aws_lambda_function" "aws_lambda" {
   function_name = "client-report-generator"
-  description = "Generate cost consumption report"
-  handler = "lambda.lambda_handler"
-  runtime = "python3.7"
+  description   = "Generate cost consumption report"
+  handler       = "lambda.lambda_handler"
+  runtime       = "python3.7"
 
-  role = aws_iam_role.lambda_role.arn
+  role        = aws_iam_role.lambda_role.arn
   memory_size = 128
-  timeout = 300
+  timeout     = 300
 
-  depends_on = [null_resource.install_python_dependencies]
+  depends_on       = [null_resource.install_python_dependencies]
   source_code_hash = data.archive_file.create_pkg.output_base64sha256
-  filename = data.archive_file.create_pkg.output_path
+  filename         = data.archive_file.create_pkg.output_path
 }
