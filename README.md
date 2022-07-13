@@ -1,7 +1,7 @@
 # AWS Cost Consumption
-AWS Control Cosnumption uses terraform to provisioning infrastructure in customer AWS accounts. You'll create an *tfvara* Terraform file, which provides the necessary input that triggers the workflow for cost consumption provisioning and reporting.
+AWS Control Cosnumption uses terraform to provisioning infrastructure in customer AWS accounts. You'll create an *tfvars* Terraform file, which provides the necessary input that triggers the workflow for cost consumption provisioning and reporting.
 
-For more information on the solution, see (**https://docs.aws.amazon.com/controltower/latest/userguide/aft-overview.html**)
+For more information on the solution, see [**https://docs.aws.amazon.com/controltower/latest/userguide/aft-overview.html**]
 
 ## Getting started
 
