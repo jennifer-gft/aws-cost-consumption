@@ -1,5 +1,5 @@
 variable "region" {
-  type = string 
+  type = string
 }
 
 variable "client_name" {
@@ -8,13 +8,13 @@ variable "client_name" {
 
 variable "project_name" {
   type = string
- 
+
 }
 
 variable "schedule" {
- type = string
- default = "quarterly" // "cron(0 0 0 3,6,9,12 2 * )" 
- description = "values supported are weekly, monthly, quarterly, yearly"
+  type        = string
+  default     = "quarterly" // "cron(0 0 0 3,6,9,12 2 * )" 
+  description = "values supported are weekly, monthly, quarterly, yearly"
 }
 
 variable "project_description" {
@@ -23,17 +23,17 @@ variable "project_description" {
 
 variable "client_env" {
   type = string
- 
+
 }
 
 variable "total_client_env" {
- type = string
+  type = string
 }
 
 variable "install_date" {
   type = string
 }
 
-variable "destintion_account"{
-    type = string
+variable "cross_account_role" {
+  type = string
 }

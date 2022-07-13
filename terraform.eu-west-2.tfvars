@@ -1,9 +1,9 @@
-region = "eu-west-2"
-client_name = "LCH (LSEG)"
-project_name = "Snowflake"
-schedule= "quarterly" 
+region              = "eu-west-2"
+client_name         = "LCH (LSEG)"
+project_name        = "Snowflake"
+schedule            = "quarterly"
 project_description = "Snowflake architecture on AWS infra"
-client_env = "development"
-total_client_env = 5
-install_date = "11-July-2022"
-destintion_account = "1234567891" //GFT Account number
+client_env          = "development"
+total_client_env    = 5
+install_date        = "11-July-2022"
+cross_account_role = "arn:aws:iam::798680644831:role/cross-account-lambda-sqs-role" 
