@@ -1,12 +1,5 @@
 data "aws_caller_identity" "current" {}
 
-locals {
-    account_id = data.aws_caller_identity.current.account_id
-}
-
-output "account_id" {
-  value = data.aws_caller_identity.current.account_id
-}
 ##
 ## A module to create an SQS queue, along with its dead-letter queue and access policies
 ##
@@ -35,12 +28,12 @@ resource "aws_sqs_queue" "deadletter_queue" {
   visibility_timeout_seconds  = var.visibility_timeout
 }
 
-resource "aws_sqs_queue_policy" "test" {
+resource "aws_iam_policy" "sqspolicy" {
   queue_url = aws_sqs_queue.base_queue.id
   policy = <<POLICY
 {
   "Version": "2012-10-17",
-  "Id": "Queue1_Policy_UUID",
+  "Id": "Queue_Policy_UUID",
   "Statement": 
   [
     {
@@ -50,11 +43,11 @@ resource "aws_sqs_queue_policy" "test" {
         { 
           "AWS":
           [ 
-            "arn:aws:iam::"${var.destintion_account}":role/cross-account-lambda-sqs-role"
+            "arn:aws:iam:${data.aws_caller_identity.current.account_id}:role/cross-account-lambda-sqs-role"
           ] 
         }, 
       "Action": "sqs:*",       
-      "Resource": "arn:aws:sqs:us-east-1:"${local.account_id}":LambdaCrossAccountQueue"     
+      "Resource": ${aws_sqs_queue.base_queue.arn}
     }   
   ]
 } 
@@ -68,26 +61,9 @@ POLICY
 resource "aws_iam_policy" "consumer_policy" {
   name        = "SQS-${var.queue_name}-${data.aws_region.current.name}-consumer_policy"
   description = "Attach this policy to consumers of ${var.queue_name} SQS queue"
-  policy      = data.aws_iam_policy_document.consumer_policy.json
+  policy      = aws_iam_policy.sqspolicy.arn
 }
 
-data "aws_iam_policy_document" "consumer_policy" {
-  statement {
-    actions = [
-      "sqs:ChangeMessageVisibility",
-      "sqs:ChangeMessageVisibilityBatch",
-      "sqs:DeleteMessage",
-      "sqs:DeleteMessageBatch",
-      "sqs:GetQueueAttributes",
-      "sqs:GetQueueUrl",
-      "sqs:ReceiveMessage"
-    ]
-    resources = [
-      aws_sqs_queue.base_queue.arn,
-      aws_sqs_queue.deadletter_queue.arn
-    ]
-  }
-}
 
 
 resource "aws_iam_policy" "producer_policy" {
