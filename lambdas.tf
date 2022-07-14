@@ -20,7 +20,7 @@ data "archive_file" "create_pkg" {
 }
 
 resource "aws_lambda_function" "aws_lambda" {
-  function_name = "client-report-generator"
+  function_name = "${var.prefix}-client-report-generator"
   description   = "Generate cost consumption report"
   handler       = "lambda.lambda_handler"
   runtime       = "python3.7"
@@ -32,4 +32,16 @@ resource "aws_lambda_function" "aws_lambda" {
   depends_on       = [null_resource.install_python_dependencies]
   source_code_hash = data.archive_file.create_pkg.output_base64sha256
   filename         = data.archive_file.create_pkg.output_path
+
+  environment {
+    variables = {
+      region       = var.region
+      client_name  = var.client_name
+      project_name = var.project_name
+      description  = var.project_description
+      client_env   = var.client_env
+      total_env    = var.total_client_env
+    }
+
+  }
 }

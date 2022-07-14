@@ -7,6 +7,22 @@ For more information on the solution, see https://confluence.gft.com/display/ECS
 
 This guide is intended for administrators of AWS Cost Consumption tool who wish to set up the infrastructure in customer environment. 
 
+## Configure and launch your AWS Cost Consumption Tooling
+
+**Step 1**: Identify the primary region used by customer accounts and confirm that lambda exists in the same region in GFT AWS account
+
+**Step 2**: Collect input variables (below) from client teams and configure tfvars
+
+**Step 3**: Ensure you have valid AWS account credentials from client teams
+
+**Step 4**: Setup the Terraform environment and backend state file location
+
+**Step 5**: Provision resources in client AWS infrastucture
+
+**Step 6**: Ensure all resources are created succesfully, record the outputs
+
+**Step 7**: Record errors if provisioning fails 
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |

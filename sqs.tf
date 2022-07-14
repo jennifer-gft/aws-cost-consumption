@@ -7,7 +7,7 @@ data "aws_region" "current" {}
 ##
 
 resource "aws_sqs_queue" "base_queue" {
-  name                       = "report-delivery-queue"
+  name                       = "${var.prefix}-report-delivery-queue"
   message_retention_seconds  = 86400
   visibility_timeout_seconds = 60
   redrive_policy = jsonencode({
@@ -17,7 +17,7 @@ resource "aws_sqs_queue" "base_queue" {
 }
 
 resource "aws_sqs_queue" "deadletter_queue" {
-  name                       = "report-delivery-DLQ"
+  name                       = "${var.prefix}-report-delivery-DLQ"
   message_retention_seconds  = 86400
   visibility_timeout_seconds = 60
 }
@@ -37,7 +37,7 @@ resource "aws_sqs_queue_policy" "sqspolicy" {
         "sqs:*"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:sqs:eu-west-2:${data.aws_caller_identity.current.account_id}:report-delivery-queue",
+      "Resource": "${aws_sqs_queue.base_queue.arn}",
       "Principal": {
         "AWS": [
           "${var.cross_account_role}"

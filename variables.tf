@@ -37,3 +37,8 @@ variable "install_date" {
 variable "cross_account_role" {
   type = string
 }
+
+variable "prefix" {
+  type        = string
+  description = "prefix that client uses for naming their resources"
+}
