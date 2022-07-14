@@ -36,3 +36,4 @@ This guide is intended for administrators of AWS Cost Consumption tool who wish 
 | total_client_env | Total number of AWS accounts | `number` | - | yes |
 | install_date | Today's date | `string` | - | no |
 | cross_account_role | Role permission | `string` | "arn:aws:iam::798680644831:role/cross-account-lambda-sqs-role"  | yes |
+| prefix | Prefix used in client resources (eg: lch-sno-prod)| `string` | - | yes |
