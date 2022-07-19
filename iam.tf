@@ -2,7 +2,7 @@
  * Create function role with appropriate access policies
  */
 resource "aws_iam_role" "lambda_role" {
-  name = "client-lambda-role"
+  name = "${var.prefix}-client-lambda-role"
 
   assume_role_policy = <<-EOF
   {
@@ -28,7 +28,7 @@ EOF
 }
 
 resource "aws_iam_policy" "lambda_policy" {
-  name = "client-lambda-policy"
+  name = "${var.prefix}-client-lambda-policy"
 
   policy = <<-EOF
   {
