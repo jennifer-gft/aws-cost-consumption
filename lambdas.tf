@@ -29,7 +29,7 @@ resource "aws_lambda_function" "aws_lambda" {
   memory_size = 128
   timeout     = 300
 
-  depends_on       = [null_resource.install_python_dependencies]
+  depends_on       = [null_resource.install_python_dependencies, aws_sqs_queue.base_queue]
   source_code_hash = data.archive_file.create_pkg.output_base64sha256
   filename         = data.archive_file.create_pkg.output_path
 
@@ -41,6 +41,7 @@ resource "aws_lambda_function" "aws_lambda" {
       description  = var.project_description
       client_env   = var.client_env
       total_env    = var.total_client_env
+      sqs          = aws_sqs_queue.base_queue.arn
     }
 
   }
