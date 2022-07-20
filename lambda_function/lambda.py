@@ -8,20 +8,20 @@ from dateutil.relativedelta import relativedelta
 
 logger = logging.getLogger(__name__)
 
-sqs = boto3.resource('sqs')
-queue = sqs.get_queue_by_name(QueueName='test') - look for queue name
 
-def send_message(queue, message_body):
+def send_queue_message(message):
+    # Get the service resource
+    sqs = boto3.resource('sqs')
+    
+    # Get the queue
+    queue = sqs.get_queue_by_name(QueueName='dev-report-delivery-queue')
+    
+    # Create a new message
+    response = queue.send_message(MessageBody=message)
+    print(response.get('MessageId'))
 
-    try:
-        response = queue.send_message(
-            MessageBody=message_body,
-        )
-    except ClientError as error:
-        logger.exception("Send message failed: %s", message_body)
-        raise error
-    else:
-        return response
+
+
 
 def lambda_handler(event, context):
     client = boto3.client('ce',region_name='eu-west-2')
@@ -46,8 +46,9 @@ def lambda_handler(event, context):
         }
     ]
     )
-    # print(response)
     # TODO implement
+    
+    send_queue_message(json.dumps(CAUMsg))
     
     return {
         'statusCode': 200,
