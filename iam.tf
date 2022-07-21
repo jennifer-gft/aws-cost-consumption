@@ -5,22 +5,41 @@ resource "aws_iam_role" "lambda_role" {
   name = "${var.prefix}-client-lambda-role"
 
   assume_role_policy = <<-EOF
-  {
+{
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": [
-            "lambda.amazonaws.com"
-          ]
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sqs:SendMessage",
+                "sqs:DeleteMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:ReceiveMessage",
+                "sqs:TagQueue",
+                "sqs:UntagQueue",
+                "sqs:PurgeQueue",
+                "sqs:GetQueueUrl"
+            ],
+            "Resource": "arn:aws:sqs:::*"
         },
-        "Action": [
-          "sts:AssumeRole"
-        ]
-      }
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ce:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
     ]
-  }
+}
 EOF
   tags = {
     Owner = var.project_name
