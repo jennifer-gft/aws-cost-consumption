@@ -41,7 +41,7 @@ resource "aws_lambda_function" "aws_lambda" {
       description  = var.project_description
       client_env   = var.client_env
       total_env    = var.total_client_env
-      sqs          = aws_sqs_queue.base_queue.arn
+      sqs          = aws_sqs_queue.base_queue.name
     }
 
   }
