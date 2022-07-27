@@ -1,10 +1,15 @@
 import json
 import boto3
 import logging
-import sys
+import os
 from botocore.exceptions import ClientError
+
 import datetime
 from dateutil.relativedelta import relativedelta
+startCAU = datetime.date.today() - relativedelta(months=3)
+endCAU = datetime.date.today()
+startFC = datetime.date.today()
+endFC = datetime.date.today() + relativedelta(months=1) 
 
 logger = logging.getLogger(__name__)
 
@@ -14,24 +19,22 @@ def send_queue_message(message):
     sqs = boto3.resource('sqs')
     
     # Get the queue
-    queue = sqs.get_queue_by_name(QueueName='dev-report-delivery-queue')
+    queue = sqs.get_queue_by_name(QueueName=os.environ['sqs'])
     
     # Create a new message
-    response = queue.send_message(MessageBody=message)
+    response = queue.send_message(MessageBody=json.dumps(message))
     print(response.get('MessageId'))
 
 
 
 
 def lambda_handler(event, context):
-    client = boto3.client('ce',region_name='eu-west-2')
-    start = datetime.date.today() - relativedelta(months=3)
-    end = datetime.date.today() 
-    print(start)
+    client = boto3.client('ce',region_name=os.environ['region'])
+    
     CAUMsg = client.get_cost_and_usage(
         TimePeriod={
-            'Start': start.isoformat(),
-            'End' : end.isoformat()
+            'Start': startCAU.isoformat(),
+            'End' : endCAU.isoformat()
         },
         Granularity='MONTHLY',
         Metrics = ["BlendedCost"],
@@ -46,11 +49,21 @@ def lambda_handler(event, context):
         }
     ]
     )
-    # TODO implement
     
-    send_queue_message(json.dumps(CAUMsg))
+    ForecastMsg = client.get_cost_forecast(
+        TimePeriod={
+            'Start': startFC.isoformat(),
+            'End' : endFC.isoformat()
+        },
+        Granularity='MONTHLY',
+        Metric = "BLENDED_COST",
+    )
+    # TODO implement
+    print("======>",CAUMsg)
+    send_queue_message(CAUMsg)
+    #send_queue_message(ForecastMsg)
     
     return {
         'statusCode': 200,
-        'body': json.dumps(CAUMsg)
+        'body': json.dumps(ForecastMsg)
     }
