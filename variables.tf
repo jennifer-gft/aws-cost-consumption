@@ -13,8 +13,8 @@ variable "project_name" {
 
 variable "schedule" {
   type        = string
-  default     = "cron(0 0 1 1/3 ? *)" // "quarterly"
-  description = "values supported are weekly, monthly, quarterly, yearly"
+  default     = "cron(0 0 1 1,4,7,10 ? *)" // "quarterly"
+  description = "Runs at 12:00 AM, on day 1 of the month, only in January, April, July, and October"
 }
 
 variable "project_description" {

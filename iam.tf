@@ -24,6 +24,8 @@ resource "aws_iam_role" "lambda_role" {
 EOF
   tags = {
     Owner = var.project_name
+    Name        = "${var.prefix}-client-lambda-role"
+    Environment = "${var.client_env}"
   }
 }
 

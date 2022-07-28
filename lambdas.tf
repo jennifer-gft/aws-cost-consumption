@@ -32,7 +32,10 @@ resource "aws_lambda_function" "aws_lambda" {
   depends_on       = [null_resource.install_python_dependencies, aws_sqs_queue.base_queue]
   source_code_hash = data.archive_file.create_pkg.output_base64sha256
   filename         = data.archive_file.create_pkg.output_path
-
+  tags = {
+    Name        = "${var.prefix}-client-report-generator"
+    Environment = "${var.client_env}"
+  }
   environment {
     variables = {
       region       = var.region
