@@ -31,20 +31,42 @@ resource "aws_iam_policy" "lambda_policy" {
   name = "${var.prefix}-client-lambda-policy"
 
   policy = <<-EOF
-  {
-    "Version": "2012-10-17",
+{
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ],
-        "Resource": "*"
-      }
-    ]
-  }
+        {
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action" : [
+                "ce:*"
+                ],
+                "Effect" : "Allow",
+                "Resource": "*"
+        },
+        {
+            "Action" : [
+                "sqs:SendMessage",
+                "sqs:DeleteMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:ReceiveMessage",
+                "sqs:TagQueue",
+                "sqs:UntagQueue",
+                "sqs:PurgeQueue",
+                "sqs:GetQueueUrl"
+                ],
+                "Effect" : "Allow",
+                "Resource" : "*"
+        }
+    ],
+    
+    "Version": "2012-10-17"
+}
 EOF
 }
 
