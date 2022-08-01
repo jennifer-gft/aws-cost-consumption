@@ -28,23 +28,32 @@ resource "aws_sqs_queue_policy" "sqspolicy" {
   policy = <<POLICY
 
 {
-  "Id": "Queue_Policy_access",
   "Version": "2012-10-17",
+  "Id": "Queue_Policy_access",
   "Statement": [
     {
       "Sid": "Queue_Actions",
-      "Action": [
-        "sqs:*"
-      ],
       "Effect": "Allow",
-      "Resource": "${aws_sqs_queue.base_queue.arn}",
       "Principal": {
-        "AWS": [
-          "${var.cross_account_role}"
-        ]
-      }
+        "AWS": "${var.cross_account_role}"
+      },
+      "Action": "sqs:*",
+      "Resource": "${aws_sqs_queue.base_queue.arn}"
+    },
+    {
+      "Sid": "Queue_Actions2",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::798680644831:role/cross-account-lambda-sqs-role"
+      },
+      "Action": "sqs:*",
+      "Resource": "arn:aws:sqs:eu-west-2:484165963982:dev-report-delivery-queue"
     }
   ]
 }
 POLICY
 }
+
+
+
+
