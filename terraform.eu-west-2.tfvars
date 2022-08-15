@@ -1,4 +1,4 @@
-region              = "eu-west-2"
+region              = "us-east-1"
 client_name         = "LCH (LSEG)"
 project_name        = "Snowflake"
 # schedule            = "quarterly"
@@ -6,5 +6,5 @@ project_description = "Snowflake Landing Zone in AWS"
 client_env          = "development"
 total_client_env    = 5
 install_date        = "11-July-2022"
-cross_account_role  = "arn:aws:iam::798680644831:role/cross-account-lambda-sqs-role"
+cross_account_role  = "arn:aws:iam::061683563079:role/cross-account-lambda-sqs-role"
 prefix              = "dev"
