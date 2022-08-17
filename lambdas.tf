@@ -45,6 +45,7 @@ resource "aws_lambda_function" "aws_lambda" {
       client_env   = var.client_env
       total_env    = var.total_client_env
       sqs          = aws_sqs_queue.base_queue.name
+      country      = var.country
     }
 
   }

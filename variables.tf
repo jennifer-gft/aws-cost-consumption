@@ -42,3 +42,7 @@ variable "prefix" {
   type        = string
   description = "prefix that client uses for naming their resources"
 }
+
+variable "country" {
+  type    = string
+}

@@ -1,3 +1,4 @@
+from ast import For
 import json
 import boto3
 import logging
@@ -38,6 +39,7 @@ def lambda_handler(event, context):
     ForecastMsg["description"] = os.getenv("description", default=None)
     ForecastMsg["client_env"] = os.getenv("client_env", default=None)
     ForecastMsg["total_env"] = os.getenv("total_env", default=None)
+    ForecastMsg["country"] = os.getenv("country", default=None)
     
     print("Forecast report ",ForecastMsg)
     
@@ -69,6 +71,7 @@ def lambda_handler(event, context):
     CAUMsg["description"] = os.getenv("description", default=None)
     CAUMsg["client_env"] = os.getenv("client_env", default=None)
     CAUMsg["total_env"] = os.getenv("total_env", default=None)
+    CAUMsg["country"] = os.getenv("country", default=None)
     
     print("Cost usage report ",CAUMsg)
    

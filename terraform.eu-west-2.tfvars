@@ -8,3 +8,4 @@ total_client_env    = 5
 install_date        = "11-July-2022"
 cross_account_role  = "arn:aws:iam::061683563079:role/cross-account-lambda-sqs-role"
 prefix              = "dev"
+country             = "UK"
