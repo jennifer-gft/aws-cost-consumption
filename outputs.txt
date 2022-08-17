@@ -1,0 +1,21 @@
+LCH:
+base_queue_url = base_queue_url = "arn:aws:sqs:eu-west-2:522557265874:lch-sno-poc-report-delivery-queue"
+cloudwatch_alarm = {
+  "arn" = "arn:aws:events:eu-west-2:522557265874:rule/QuarterlyLambdaTrigger"
+  "description" = "Cloudwatch Cron Trigger for Lambda Function"
+  "event_bus_name" = "default"
+  "event_pattern" = "{\"detail-type\":[\"AWS Console Lambda Scheduled Run\"]}"
+  "id" = "QuarterlyLambdaTrigger"
+  "is_enabled" = true
+  "name" = "QuarterlyLambdaTrigger"
+  "name_prefix" = ""
+  "role_arn" = ""
+  "schedule_expression" = "cron(0 0 1 1,4,7,10 ? *)"
+  "tags" = tomap({})
+  "tags_all" = tomap({})
+}
+deadletter_queue_url = "https://sqs.eu-west-2.amazonaws.com/522557265874/lch-sno-poc-report-delivery-DLQ"
+lambda_arn = "arn:aws:lambda:eu-west-2:522557265874:function:lch-sno-poc-client-report-generator"
+lambda_iam = "arn:aws:iam::522557265874:role/lch-sno-poc-client-lambda-role"
+lambda_name = "lch-sno-poc-client-report-generator"
+

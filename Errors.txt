@@ -1,0 +1,7 @@
+│ Error: failed creating IAM Role (lch-sno-poc-client-lambda-role): AccessDenied: User: arn:aws:sts::522557265874:assumed-role/lch-sno-poc-fulladmin-adfs-role/Jennifer.Nicholas2@lseg.com is not authorized to perform: iam:CreateRole on resource: arn:aws:iam::522557265874:role/lch-sno-poc-client-lambda-role with an explicit deny in an identity-based policy
+│       status code: 403, request id: 287b19c3-5223-42a7-9892-28e2a70b3dce
+│ 
+│   with aws_iam_role.lambda_role,
+│   on iam.tf line 4, in resource "aws_iam_role" "lambda_role":
+│    4: resource "aws_iam_role" "lambda_role" {
+│ 

@@ -1,0 +1,9 @@
+region              = "eu-west-2"
+client_name         = "LCH-PROD (LSEG)"
+project_name        = "Snowflake"
+project_description = "Snowflake Landing Zone in AWS"
+client_env          = "development"
+total_client_env    = 3
+install_date        = "15-Aug-2022"
+cross_account_role  = "arn:aws:iam::061683563079:role/cross-account-lambda-sqs-role"
+prefix              = "lch-sno-poc"
