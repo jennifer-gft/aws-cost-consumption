@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_event_rule" "LambdaTrigger" {
-  name        = "QuarterlyLambdaTrigger"
+  name        = "${var.prefix}-QuarterlyLambdaTrigger"
   description = "Cloudwatch Cron Trigger for Lambda Function"
   schedule_expression = var.schedule
 

@@ -1,5 +1,5 @@
-region              = "us-east-1"
-client_name         = "LCH (LSEG)"
+region              = "eu-west-2"
+client_name         = "Demo"
 project_name        = "Snowflake"
 # schedule            = "quarterly"
 project_description = "Snowflake Landing Zone in AWS"

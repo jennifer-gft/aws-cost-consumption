@@ -1,6 +1,6 @@
 ####SQS 
 output "base_queue_url" {
-  value = aws_sqs_queue.base_queue.id
+  value = aws_sqs_queue.base_queue.arn
 }
 
 
